@@ -1,8 +1,13 @@
 console.log('This is ES6 version of project 2');
 
+const uid = function () {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2);
+  };
+
 class Book {
 
     constructor(name, author, type) {
+        this.id = uid();
         this.name = name;
         this.author = author;
         this.type = type;
@@ -22,8 +27,8 @@ class Display {
 
         // save the data to the browser's local storage -----
         const books = JSON.parse(localStorage.getItem("books"));
-        console.log(books);
-        books.push(book);
+        // console.log(books);
+        if (!books.some((oldBook) => oldBook.id === book.id)) books.push(book);
         localStorage.setItem("books", JSON.stringify(books));
 
     }
@@ -92,7 +97,6 @@ function libraryFormSubmit(e) {
 
     let display = new Display();
     if (display.validate(book)) {
-
         display.add(book);
         display.clear();
         display.show('success', 'Your book has been successfully added')
@@ -112,5 +116,6 @@ function libraryFormSubmit(e) {
       books = JSON.parse(books);
       books.forEach((book) => display.add(book));
     }
-    else localStorage.setItem("books", JSON.stringify([]));
+    else
+        localStorage.setItem("books", JSON.stringify([])); 
   })();
