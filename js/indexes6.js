@@ -20,6 +20,12 @@ class Display {
                         </tr>`;
         tableBody.innerHTML += uiString;
 
+        // save the data to the browser's local storage -----
+        const books = JSON.parse(localStorage.getItem("books"));
+        console.log(books);
+        books.push(book);
+        localStorage.setItem("books", JSON.stringify(books));
+
     }
 
     clear() {
@@ -98,3 +104,13 @@ function libraryFormSubmit(e) {
 
     e.preventDefault();
 }
+
+(() => {
+    const display = new Display();
+    let books = localStorage.getItem("books");
+    if (books) {
+      books = JSON.parse(books);
+      books.forEach((book) => display.add(book));
+    }
+    else localStorage.setItem("books", JSON.stringify([]));
+  })();
