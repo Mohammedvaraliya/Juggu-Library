@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,7 +19,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/index.html">Juggu library</a>
+            <a class="navbar-brand" href="/index.html"><b> Juggu library </b></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -46,7 +47,7 @@
                       </li>
                 </ul>
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control me-2" type="search" id="searchTxt" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
@@ -119,9 +120,10 @@
                         <th scope="col">Name</th>
                         <th scope="col">Author</th>
                         <th scope="col">Type</th>
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody"> </tbody>
+                <tbody class="tableBody" id="tableBody"> </tbody>
             </table>
         </div>
 

@@ -18,10 +18,11 @@ class Display {
     add(book) {
         console.log('Adding to UI');
         let tableBody = document.getElementById('tableBody')
-        let uiString = `<tr>
-                            <td>${book.name}</td>
+        let uiString = `<tr class="tableBody" id="tableBody">
+                            <td id="search">${book.name}</td>
                             <td>${book.author}</td>
                             <td>${book.type}</td>
+                            <td><input type="button" value="Delete Row" class="btn btn-outline-danger" onclick="RemoveRow()"></td>
                         </tr>`;
         tableBody.innerHTML += uiString;
 
@@ -32,6 +33,7 @@ class Display {
         localStorage.setItem("books", JSON.stringify(books));
 
     }
+    
 
     clear() {
         let libraryForm = document.getElementById('libraryForm');
@@ -69,6 +71,24 @@ class Display {
     
     }
 }
+
+function handleDelete(event) {
+    event.stopPropagation(); // Stops the event from propogating
+    const key = this.getAttribute("data-key");
+  
+    const notes = JSON.parse(localStorage.getItem("books"));
+  
+    const newBooks = [];
+    books.forEach((element) => {
+      if (element.date === key) {
+        return;
+      }
+      return newBooks.push(element);
+    });
+  
+    localStorage.setItem("books", JSON.stringify([]));
+    showBooks();
+  }
 
 // Add submit event listener to libraryForm
 let libraryForm = document.getElementById('libraryForm');
@@ -118,4 +138,13 @@ function libraryFormSubmit(e) {
     }
     else
         localStorage.setItem("books", JSON.stringify([])); 
-  })();
+})();
+
+function RemoveRow(id) {
+    // event.target will be the input element.
+    let td1 = event.target.parentNode; 
+    let tr1 = td1.parentNode; 
+    tr1.parentNode.removeChild(tr1);// the row to be removed
+    const newBooks= books.filter(book=> book.id !== td1.id)
+    localStorage.setItem("books", JSON.stringify(newBooks));
+}
