@@ -18,16 +18,16 @@ class Display {
     add(book) {
         console.log('Adding to UI');
         let tableBody = document.getElementById('tableBody')
-        let uiString = `<tr class="tableBody" id="tableBody">
+        let uiString = `<tr class="tableBody" id="tableBody" data-id="${book.id}">
                             <td id="search">${book.name}</td>
                             <td>${book.author}</td>
                             <td>${book.type}</td>
-                            <td><input type="button" value="Delete Row" class="btn btn-outline-danger" onclick="RemoveRow()"></td>
+                            <td><input id="${book.id}" type="button" value="Delete Row" class="btn btn-outline-danger" onclick="RemoveRow(this)"></td>
                         </tr>`;
         tableBody.innerHTML += uiString;
 
         // save the data to the browser's local storage -----
-        const books = JSON.parse(localStorage.getItem("books"));
+        const books = JSON.parse(localStorage.getItem('books')) || [];
         // console.log(books);
         if (!books.some((oldBook) => oldBook.id === book.id)) books.push(book);
         localStorage.setItem("books", JSON.stringify(books));
@@ -71,24 +71,6 @@ class Display {
     
     }
 }
-
-function handleDelete(event) {
-    event.stopPropagation(); // Stops the event from propogating
-    const key = this.getAttribute("data-key");
-  
-    const notes = JSON.parse(localStorage.getItem("books"));
-  
-    const newBooks = [];
-    books.forEach((element) => {
-      if (element.date === key) {
-        return;
-      }
-      return newBooks.push(element);
-    });
-  
-    localStorage.setItem("books", JSON.stringify([]));
-    showBooks();
-  }
 
 // Add submit event listener to libraryForm
 let libraryForm = document.getElementById('libraryForm');
@@ -140,11 +122,12 @@ function libraryFormSubmit(e) {
         localStorage.setItem("books", JSON.stringify([])); 
 })();
 
-function RemoveRow(id) {
-    // event.target will be the input element.
-    let td1 = event.target.parentNode; 
-    let tr1 = td1.parentNode; 
-    tr1.parentNode.removeChild(tr1);// the row to be removed
-    const newBooks= books.filter(book=> book.id !== td1.id)
-    localStorage.setItem("books", JSON.stringify(newBooks));
-}
+function RemoveRow(element) {
+    const bookId = element.id;
+    let td1 = document.getElementById(bookId).parentNode;
+    let tr1 = td1.parentNode;
+    tr1.parentNode.removeChild(tr1);
+    const books = JSON.parse(localStorage.getItem('books')) || [];
+    const newBooks = books.filter((book) => book.id !== bookId);
+    localStorage.setItem('books', JSON.stringify(newBooks));
+ }
