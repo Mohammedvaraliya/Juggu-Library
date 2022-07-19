@@ -22,7 +22,7 @@ class Display {
                             <td id="search">${book.name}</td>
                             <td>${book.author}</td>
                             <td>${book.type}</td>
-                            <td><input id="${book.id}" type="button" value="Remove Book" class="btn btn-outline-danger" onclick="RemoveRow(this)"></td>
+                            <td style="text-align: center;"><input id="${book.id}" type="button" value="Remove Book" class="btn btn-outline-danger" onclick="RemoveRow(this)"></td>
                         </tr>`;
         tableBody.innerHTML += uiString;
 
